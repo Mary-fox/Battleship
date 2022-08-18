@@ -22,8 +22,8 @@ let model = {
             { locations: ["10", "11", "12"], hits: ["", "", ""] }],
             fire: function(guess) {
                 for (var i = 0; i < this.numShips; i++) {
-                var ship = this.ships[i];
-                var index = ship.locations.indexOf(guess);
+                let ship = this.ships[i];
+                let index = ship.locations.indexOf(guess);
                 //Если координаты клетки присутствуют в массиве locations, значит, 
                 //выстрел попал в цель.
                 if (index >= 0) {
@@ -57,25 +57,25 @@ let model = {
 // isSunk   получает объект корабля и проверяет, помечены ли все его клетки маркером попадания.     
 //Если есть хотя бы одна клетка, в которую еще не попал игрок, то корабль 
 //еще жив и метод возвращает false.
-model.fire("53");
-model.fire("06");
-model.fire("16");
-model.fire("26");
-model.fire("34");
-model.fire("24");
-model.fire("44");
-model.fire("12");
-model.fire("11");
-model.fire("10");
+//model.fire("53");
+//model.fire("06");
+//model.fire("16");
+//model.fire("26");
+//model.fire("34");
+//model.fire("24");
+//model.fire("44");
+//model.fire("12");
+//model.fire("11");
+//model.fire("10");
 
 function parseGuess(guess) {
-    var alphabet = ["A", "B", "C", "D", "E", "F", "G"];
+    let alphabet = ["A", "B", "C", "D", "E", "F", "G"];
     if (guess === null || guess.length !== 2) {
     alert("Oops, please enter a letter and a number on the board.");
     } else {
     firstChar = guess.charAt(0);
-    var row = alphabet.indexOf(firstChar);
-    var column = guess.charAt(1);
+    let row = alphabet.indexOf(firstChar);
+    let column = guess.charAt(1);
     // добавляем код для получения второго символа, представляющего столбец игрового поля
     if (isNaN(row) || isNaN(column)) {
         alert("Oops, that isn't on the board.");
@@ -90,8 +90,37 @@ function parseGuess(guess) {
     }
     return null;
     }
-    console.log(parseGuess("A0"));
-    console.log(parseGuess("B6"));
-    console.log(parseGuess("G3"));
-    console.log(parseGuess("H0"));
-    console.log(parseGuess("A7"));
+    //console.log(parseGuess("A0"));
+    //console.log(parseGuess("B6"));
+    //console.log(parseGuess("G3"));
+    //console.log(parseGuess("H0"));
+    //console.log(parseGuess("A7"));
+
+    let controller = {
+        guesses: 0,
+        processGuess: function(guess) {
+        let location = parseGuess(guess);
+            //Метод parseGuess будет использоваться для проверки введенных данных
+            //Если метод не возвращает null, значит, был получен действительный объект location.
+            if (location) {
+                this.guesses++;
+                let hit = model.fire(location);
+                if (hit && model.shipsSunk === model.numShips) {
+                view.displayMessage("You sank all my battleships, in " + 
+                this.guesses + " guesses");
+ //Если выстрел попал в цель, а количество потопленных кораблей равно количеству 
+//кораблей в игре, выводится сообщение о том, что все корабли потоплены.
+                }
+            }
+        }
+    };
+    controller.processGuess("A0");
+    controller.processGuess("A6");
+    controller.processGuess("B6");
+    controller.processGuess("C6");
+    controller.processGuess("C4");
+    controller.processGuess("D4");
+    controller.processGuess("E4");
+    controller.processGuess("B0");
+    controller.processGuess("B1");
+    controller.processGuess("B2");
