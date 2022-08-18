@@ -67,3 +67,31 @@ model.fire("44");
 model.fire("12");
 model.fire("11");
 model.fire("10");
+
+function parseGuess(guess) {
+    var alphabet = ["A", "B", "C", "D", "E", "F", "G"];
+    if (guess === null || guess.length !== 2) {
+    alert("Oops, please enter a letter and a number on the board.");
+    } else {
+    firstChar = guess.charAt(0);
+    var row = alphabet.indexOf(firstChar);
+    var column = guess.charAt(1);
+    // добавляем код для получения второго символа, представляющего столбец игрового поля
+    if (isNaN(row) || isNaN(column)) {
+        alert("Oops, that isn't on the board.");
+    //А здесь функция isNaN выявляет строки и столбцы, которыене являются цифрами        
+        } else if (row < 0 || row >= model.boardSize ||
+        column < 0 || column >= model.boardSize) {
+        alert("Oops, that's off the board!");
+    //Мы также проверяем, что цифры лежат в диапазоне от 0 до 6    
+        } else {
+            return row + column;
+        }
+    }
+    return null;
+    }
+    console.log(parseGuess("A0"));
+    console.log(parseGuess("B6"));
+    console.log(parseGuess("G3"));
+    console.log(parseGuess("H0"));
+    console.log(parseGuess("A7"));
