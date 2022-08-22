@@ -114,13 +114,26 @@ function parseGuess(guess) {
             }
         }
     };
-    controller.processGuess("A0");
-    controller.processGuess("A6");
-    controller.processGuess("B6");
-    controller.processGuess("C6");
-    controller.processGuess("C4");
-    controller.processGuess("D4");
-    controller.processGuess("E4");
-    controller.processGuess("B0");
-    controller.processGuess("B1");
-    controller.processGuess("B2");
+    // controller.processGuess("A0");
+    //controller.processGuess("A6");
+    //controller.processGuess("B6");
+    //controller.processGuess("C6");
+    //controller.processGuess("C4");
+    //controller.processGuess("D4");
+    //controller.processGuess("E4");
+    //controller.processGuess("B0");
+    //controller.processGuess("B1");
+    //controller.processGuess("B2");
+
+    function init() {
+        let fireButtom = document.getElementById ("fireButton");
+        fireButtom.onclick = handleFireButton; //обработчик события нажатия — функцию  handleFireButton
+    }
+    function handleFireButton () {
+        let guessInput = document.getElementById ("guessInput");
+        let guess = guessInput.value; //извлекаем данные, введенные пользователем.Координаты хранятся 
+        //в свойстве value элемента input.
+        controller.processGuess(guess); //Координаты выстрела передаются контроллеру
+        guessInput.value = ""; //обнуление input формы перед новым выстрелом
+    }
+    window.onload = init;  //браузер должен выполнять init при полной загрузке страницы.
